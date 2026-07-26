@@ -1,0 +1,639 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ask the right LUNA questions</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css"/>
+<style>body{margin:0;background:#eef3fa;font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;justify-content:center;padding:24px;} .wrap{width:100%;max-width:1040px;}</style>
+</head>
+<body><div class="wrap">
+<style>
+  #luna * { box-sizing: border-box; }
+  #luna {
+    position: relative;
+    --blue: #2563eb; --blue-hover:#1d4ed8; --blue-bg:#eaf2fe; --blue-border:#bfdbfe; --blue-text:#1d4ed8;
+    --green: #16a34a; --green-bg:#eafaf0; --green-border:#bbead0; --green-text:#15803d;
+    --orange: #f97316; --orange-bg:#fff7ed; --orange-border:#fed7aa; --orange-text:#c2410c;
+    --purple: #8b5cf6; --purple-bg:#f5f0ff; --purple-border:#ddd6fe; --purple-text:#6d28d9;
+    --slate: #64748b; --slate-bg:#f1f5f9; --slate-border:#dbe1ea; --slate-text:#475569;
+    --red: #ef4444; --red-bg:#fee2e2; --red-border:#fca5a5; --red-text:#b91c1c;
+    --page-bg:#eef3fa; --ink:#111827; --gray:#6b7280; --gray-light:#9ca3af;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--page-bg); border-radius: 16px; padding: 1.75rem; width: 100%;
+  }
+  #luna .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #ffffff; border: 1px solid var(--blue-border); color: var(--blue-text);
+    font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  #luna h1 { font-size: 24px; font-weight: 700; color: var(--ink); margin: 0 0 6px; line-height: 1.3; }
+  #luna .sub { font-size: 14px; color: var(--gray); margin: 0 0 20px; line-height: 1.5; }
+  #luna .sub b { color: var(--ink); font-weight: 600; }
+  #luna .hidden { display: none !important; }
+
+  #luna .card-white {
+    background: #ffffff; border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(17,24,39,0.05);
+    padding: 24px;
+  }
+  #luna h2 { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 6px; }
+  #luna .desc { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 0 0 16px; }
+  #luna .steps-box { background: #f4f7fc; border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; }
+  #luna .step { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--ink); padding: 6px 0; }
+  #luna .step-num {
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--blue); color: #fff;
+    font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  #luna .lens-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  #luna .lens-chip { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; padding:5px 10px; border-radius:999px; border:1px solid; }
+
+  #luna .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: #fff; border: none;
+    font-size: 14px; font-weight: 600; padding: 11px 20px; border-radius: 999px; cursor: pointer; float: right;
+  }
+  #luna .btn-primary:hover { background: var(--blue-hover); }
+  #luna .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  #luna .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--ink);
+    border: 1px solid #d7deea; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 999px;
+    cursor: pointer; float: left;
+  }
+  #luna .btn-ghost:hover { background: #f4f7fc; }
+  #luna .btn-row { overflow: auto; margin-top: 4px; }
+
+  #luna .progress-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 10px; }
+  #luna .stage-pill {
+    display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1px solid var(--blue-border);
+    color: var(--blue-text); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+  }
+  #luna .restart-pill {
+    display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1px solid #d7deea;
+    color: var(--ink); font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+    cursor: pointer;
+  }
+  #luna .restart-pill:hover { background: #f4f7fc; }
+  #luna .step-track { display: flex; align-items: center; margin-bottom: 20px; }
+  #luna .step-circle {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 12.5px; font-weight: 700; background: #fff; border: 1px solid #d7deea; color: var(--gray-light);
+  }
+  #luna .step-circle.active, #luna .step-circle.done { background: var(--blue); border-color: var(--blue); color: #fff; }
+  #luna .step-line { flex: 1; height: 2px; background: #dbe3ef; margin: 0 6px; }
+  #luna .step-line.done { background: var(--blue); }
+
+  #luna .decision-box {
+    display: flex; align-items: flex-start; gap: 28px; padding: 2px 0 20px; margin-bottom: 16px;
+    border-bottom: 1px solid #dbe3ef;
+  }
+  #luna .decision-col { flex: 1; display: flex; gap: 12px; align-items: flex-start; }
+  #luna .decision-icon {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; background: transparent; color: var(--blue-text);
+    display: flex; align-items: center; justify-content: center; font-size: 19px; margin-top: 1px;
+  }
+  #luna .decision-title { font-size: 10.5px; font-weight: 700; color: var(--blue-text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  #luna .decision-desc { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  #luna .decision-divider { display: none; }
+  @media (max-width: 700px) { #luna .decision-box { flex-direction: column; gap: 16px; } }
+
+  #luna .lens-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 760px) { #luna .lens-board { grid-template-columns: 1fr 1fr; } }
+  #luna .lens-zone { border-radius: 14px; padding: 14px; border: 1px solid var(--bd); background: var(--tint); }
+  #luna .lens-zone.linked    { --tint: var(--green-bg);  --bd: var(--green-border);  --tc: var(--green-text);  --ac: var(--green); }
+  #luna .lens-zone.uncertain { --tint: var(--blue-bg);   --bd: var(--blue-border);   --tc: var(--blue-text);   --ac: var(--blue); }
+  #luna .lens-zone.nonlinear { --tint: var(--orange-bg); --bd: var(--orange-border); --tc: var(--orange-text); --ac: var(--orange); }
+  #luna .lens-zone.ambiguous { --tint: var(--purple-bg); --bd: var(--purple-border); --tc: var(--purple-text); --ac: var(--purple); }
+  #luna .lens-zone.none      { --tint: var(--slate-bg);  --bd: var(--slate-border);  --tc: var(--slate-text);  --ac: var(--slate); }
+  #luna .lens-head { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+  #luna .lens-icon {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 1.5px solid var(--bd);
+    color: var(--tc); display: flex; align-items: center; justify-content: center; font-size: 13px;
+  }
+  #luna .lens-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+  #luna .lens-sub { font-size: 10.5px; color: var(--gray); margin-top: 1px; }
+  #luna .lens-drop {
+    min-height: 60px; border: 2px dashed var(--bd); border-radius: 10px; background: #fff;
+    padding: 8px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; position: relative;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  #luna .lens-drop.over { border-color: var(--ac); background: var(--tint); }
+  #luna .lens-placeholder {
+    width: 100%; text-align: center; font-size: 11px; color: var(--gray-light); padding: 12px 4px; display: flex;
+    flex-direction: column; align-items: center; gap: 4px;
+  }
+
+  #luna .placed-chip {
+    background: #fff; border: 1px solid var(--bd); border-radius: 8px; padding: 6px 10px 6px 8px; font-size: 11px;
+    color: var(--ink); display: flex; align-items: center; gap: 6px; cursor: pointer; max-width: 100%;
+  }
+  #luna .placed-chip .rm { color: var(--gray-light); font-size: 12px; }
+  #luna .placed-chip.locked { cursor: default; }
+  #luna .placed-chip.correct { border-color: var(--green); background: var(--green-bg); color: var(--green-text); }
+  #luna .placed-chip.incorrect { border-color: var(--red); background: var(--red-bg); color: var(--red-text); }
+  #luna .placed-chip .gi { font-size: 12px; }
+
+  #luna .bank-label { font-size: 11px; font-weight: 700; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; display:flex; align-items:center; justify-content:space-between; }
+  #luna .bank { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; min-height: 52px; }
+  #luna .sticky {
+    background: #fdf3d0; border: 1px solid #f0dfa0; border-radius: 10px; padding: 10px 12px; width: 178px;
+    font-size: 11.5px; font-weight: 500; color: #52481f; line-height: 1.45; cursor: grab; user-select: none;
+    touch-action: none; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: opacity 0.15s;
+  }
+  #luna .sticky.src { opacity: 0.15; cursor: grabbing; }
+  #luna .sticky.locked { cursor: default; }
+  #luna .sticky.correct { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); }
+  #luna .sticky.incorrect { background: var(--red-bg); border-color: var(--red-border); color: var(--red-text); }
+
+  #luna .tip-row {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray); background: #fff;
+    border: 1px solid #e3e8f0; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px;
+  }
+  #luna .tip-row i { color: var(--blue-text); font-size: 14px; }
+
+  #luna-gh {
+    display: none; position: absolute; pointer-events: none; z-index: 9999; max-width: 178px;
+    background: #fdf3d0; border: 2px solid var(--blue); border-radius: 10px; padding: 10px 12px;
+    font-size: 11.5px; font-weight: 500; color: #52481f; line-height: 1.45;
+    box-shadow: 0 10px 28px rgba(37,99,235,0.18); transform: rotate(1.5deg) scale(1.03);
+  }
+
+  #luna .score-row {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    background: #fff; border: 1px solid #e3e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  #luna .score-text { font-size: 13px; color: var(--ink); font-weight: 600; }
+  #luna .score-text span { color: var(--blue-text); }
+
+  #luna .recap-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 4px; }
+  @media (max-width: 900px) { #luna .recap-grid { grid-template-columns: 1fr 1fr; } }
+  #luna .recap-col { border-radius: 12px; padding: 12px 14px; border: 1px solid var(--bd); background: var(--tint); }
+  #luna .recap-col.linked    { --tint: var(--green-bg);  --bd: var(--green-border);  --tc: var(--green-text); }
+  #luna .recap-col.uncertain { --tint: var(--blue-bg);   --bd: var(--blue-border);   --tc: var(--blue-text); }
+  #luna .recap-col.nonlinear { --tint: var(--orange-bg); --bd: var(--orange-border); --tc: var(--orange-text); }
+  #luna .recap-col.ambiguous { --tint: var(--purple-bg); --bd: var(--purple-border); --tc: var(--purple-text); }
+  #luna .recap-col.none      { --tint: var(--slate-bg);  --bd: var(--slate-border);  --tc: var(--slate-text); }
+  #luna .recap-title { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  #luna .recap-item { display: flex; align-items: flex-start; gap: 6px; font-size: 11px; color: var(--ink); line-height: 1.4; margin-bottom: 7px; }
+  #luna .recap-item i { color: var(--tc); font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+
+  #luna .done-card { text-align: left; }
+  #luna .done-icon {
+    width: 48px; height: 48px; border-radius: 12px; background: var(--blue); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 0 18px;
+  }
+  #luna .done-title { font-size: 20px; font-weight: 700; color: var(--ink); margin: 0 0 14px; line-height: 1.3; }
+  #luna .done-body { font-size: 14px; color: var(--gray); line-height: 1.7; margin: 0 0 12px; }
+  #luna .done-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; gap: 12px; flex-wrap: wrap; }
+  #luna .done-pill {
+    display: inline-flex; align-items: center; gap: 6px; background: var(--blue-bg); color: var(--blue-text);
+    border: 1px solid var(--blue-border); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  #luna .btn-restart {
+    display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--ink);
+    border: 1px solid #d7deea; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px;
+    cursor: pointer; white-space: nowrap;
+  }
+  #luna .btn-restart:hover { background: #f4f7fc; }
+</style>
+
+<div id="luna">
+<h2 style="position:absolute; width:1px; height:1px; overflow:hidden;">Two-scenario microtask: sort a bank of candidate questions into the four LUNA lenses, or the doesn't-fit bucket, then check your answers against the solution.</h2>
+
+<span class="badge"><i class="ti ti-puzzle" style="font-size:14px" aria-hidden="true"></i>Microtask</span>
+<h1>Ask the right LUNA questions</h1>
+<p class="sub">For each decision, use <b>LUNA</b> to sort the candidate questions into the lens they belong to — or set aside the ones that don't fit at all.</p>
+
+<div id="luna-intro">
+  <div class="card-white">
+    <h2>Not every question is a LUNA question</h2>
+    <p class="desc">Good decisions start with good questions. Sort each question bank into the four LUNA lenses — a couple of questions in every set are distractions that don't belong to any of them.</p>
+    <div class="lens-legend">
+      <span class="lens-chip" style="background:var(--green-bg);border-color:var(--green-border);color:var(--green-text)"><i class="ti ti-link"></i>Linked</span>
+      <span class="lens-chip" style="background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text)"><i class="ti ti-help"></i>Uncertain</span>
+      <span class="lens-chip" style="background:var(--orange-bg);border-color:var(--orange-border);color:var(--orange-text)"><i class="ti ti-trending-up"></i>Non-linear</span>
+      <span class="lens-chip" style="background:var(--purple-bg);border-color:var(--purple-border);color:var(--purple-text)"><i class="ti ti-arrows-shuffle"></i>Ambiguous</span>
+      <span class="lens-chip" style="background:var(--slate-bg);border-color:var(--slate-border);color:var(--slate-text)"><i class="ti ti-ban"></i>Doesn't fit</span>
+    </div>
+    <div class="steps-box" style="margin-top:14px;">
+      <div class="step"><span class="step-num">1</span><span>You'll work through <b>2 decisions</b>, one at a time.</span></div>
+      <div class="step"><span class="step-num">2</span><span>Drag each question from the bank into the lens it belongs to — five are shown at once, and the bank refills as you place them.</span></div>
+      <div class="step"><span class="step-num">3</span><span>Hit <b>Check</b> to grade your answers, then see the full solution before moving on.</span></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" id="luna-start"><i class="ti ti-player-play" aria-hidden="true"></i>Start microtask</button>
+    </div>
+  </div>
+</div>
+
+<div id="luna-board" class="hidden">
+  <div id="luna-gh"></div>
+  <div class="progress-header">
+    <span class="stage-pill" id="luna-stag"><i class="ti ti-progress"></i></span>
+    <span class="restart-pill" id="luna-restart-mid"><i class="ti ti-arrow-back-up"></i>Restart</span>
+  </div>
+  <div class="step-track" id="luna-step-track"></div>
+  <div class="decision-box">
+    <div class="decision-col">
+      <div class="decision-icon" id="luna-dicon"><i class="ti"></i></div>
+      <div>
+        <div class="decision-title">Decision</div>
+        <div class="decision-desc" id="luna-dtext"></div>
+      </div>
+    </div>
+    <div class="decision-divider"></div>
+    <div class="decision-col">
+      <div class="decision-icon"><i class="ti ti-help"></i></div>
+      <div>
+        <div class="decision-title">Your task</div>
+        <div class="decision-desc">Use LUNA to identify the key questions you should ask before making this decision.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lens-board" id="luna-board-zones"></div>
+
+  <div class="bank-label"><span>Question bank</span><span id="luna-bank-count"></span></div>
+  <div class="bank" id="luna-bank"></div>
+
+  <div class="tip-row"><i class="ti ti-info-circle"></i>Two questions in this set don't fit any LUNA category — just leave those in the bank.</div>
+
+  <div class="btn-row">
+    <button class="btn-primary" id="luna-check"><i class="ti ti-check" aria-hidden="true"></i>Check</button>
+    <button class="btn-ghost" id="luna-reset"><i class="ti ti-refresh" aria-hidden="true"></i>Reset</button>
+  </div>
+
+  <div id="luna-score" class="hidden" style="margin-top:16px;">
+    <div class="score-row">
+      <div class="score-text">Score: <span id="luna-score-text"></span></div>
+      <div class="btn-row" style="margin:0;">
+        <button class="btn-primary" id="luna-see-solution" style="float:none;"><i class="ti ti-arrow-right" aria-hidden="true"></i>See solution</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="luna-recap" class="hidden">
+  <span class="stage-pill" id="luna-recap-tag"></span>
+  <h2 style="margin-bottom:14px;">Solution</h2>
+  <div class="recap-grid" id="luna-recap-grid"></div>
+  <div class="btn-row" style="margin-top:16px;">
+    <button class="btn-primary" id="luna-recap-next"></button>
+  </div>
+</div>
+
+<div class="card-white done-card hidden" id="luna-done">
+  <div class="done-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+  <div class="done-title">The right question comes before the right answer</div>
+  <p class="done-body">LUNA isn't a checklist to fill in after a decision is made — it's a set of questions to ask before you commit. Some things worth debating (like a slogan or a color) aren't LUNA questions at all, and knowing the difference keeps the framework sharp instead of diluted.</p>
+  <div class="done-footer">
+    <span class="done-pill"><i class="ti ti-puzzle" style="font-size:12px" aria-hidden="true"></i><span id="luna-donepill"></span></span>
+    <button class="btn-restart" id="luna-restart"><i class="ti ti-refresh" aria-hidden="true"></i>Restart microtask</button>
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+const LENSES = [
+  { key:'linked',    name:'Linked',     icon:'ti-link' },
+  { key:'uncertain', name:'Uncertain',  icon:'ti-help' },
+  { key:'nonlinear', name:'Non-linear', icon:'ti-trending-up' },
+  { key:'ambiguous', name:'Ambiguous',  icon:'ti-arrows-shuffle' }
+];
+
+const SCENARIOS = [
+  {
+    label: 'Decision 1 of 2', deckIcon: 'ti-speakerphone',
+    decision: 'Marketing proposes a major promotion next month to help achieve quarterly sales targets.',
+    lensSub: { linked:'What is linked?', uncertain:'What do we not know yet?', nonlinear:'Could a small change create a large effect?', ambiguous:'Why might different stakeholders disagree?' },
+    questions: [
+      { id:'p1', type:'linked', text:'Which suppliers could be affected by the promotion?' },
+      { id:'p2', type:'linked', text:'Which warehouses and transportation providers need to support higher volumes?' },
+      { id:'p3', type:'linked', text:'Which products may require additional inventory?' },
+      { id:'p4', type:'linked', text:'Which customers or channels are included in the promotion?' },
+      { id:'p5', type:'uncertain', text:'How much will demand actually increase?' },
+      { id:'p6', type:'uncertain', text:'How accurate is the demand forecast?' },
+      { id:'p7', type:'uncertain', text:'How will competitors react to the promotion?' },
+      { id:'p8', type:'uncertain', text:'Will customers buy more than expected or less than expected?' },
+      { id:'p9', type:'nonlinear', text:'Could a small forecasting error create major stockouts?' },
+      { id:'p10', type:'nonlinear', text:'Could one delayed supplier shipment affect many customer orders?' },
+      { id:'p11', type:'nonlinear', text:'Could a small inventory shortage significantly reduce service levels?' },
+      { id:'p12', type:'nonlinear', text:'Could a modest increase in demand overload production capacity?' },
+      { id:'p13', type:'ambiguous', text:'Why might Sales support the promotion while Finance is concerned?' },
+      { id:'p14', type:'ambiguous', text:'Why might Marketing focus on revenue while Operations worries about execution?' },
+      { id:'p15', type:'ambiguous', text:'Why might different functions disagree on the right inventory level?' },
+      { id:'p16', type:'ambiguous', text:'What trade-offs between growth, service, cost, and inventory need to be discussed?' },
+      { id:'p17', type:'none', text:'Which advertising slogan should we use?' },
+      { id:'p18', type:'none', text:'What color should the campaign banner be?' }
+    ]
+  },
+  {
+    label: 'Decision 2 of 2', deckIcon: 'ti-ship',
+    decision: 'To reduce carbon emissions, the company plans to replace air shipments from Thailand with ocean freight.',
+    lensSub: { linked:'Who or what could be affected?', uncertain:'What do we not know yet?', nonlinear:'Could a small change create a large effect?', ambiguous:'Why might different stakeholders disagree?' },
+    questions: [
+      { id:'o1', type:'linked', text:'Which customers could be affected by longer lead times?' },
+      { id:'o2', type:'linked', text:'Which suppliers, warehouses, and logistics partners need to adapt?' },
+      { id:'o3', type:'linked', text:'How might this change affect inventory levels across the network?' },
+      { id:'o4', type:'linked', text:'Which products currently depend on rapid replenishment by air?' },
+      { id:'o5', type:'uncertain', text:'How much will customer demand vary during the longer replenishment period?' },
+      { id:'o6', type:'uncertain', text:'How reliable are the expected ocean transit times?' },
+      { id:'o7', type:'uncertain', text:'How much CO\u2082 reduction will actually be achieved?' },
+      { id:'o8', type:'uncertain', text:'How might future disruptions affect ocean transport availability?' },
+      { id:'o9', type:'nonlinear', text:'Could a small increase in transit time require a large increase in inventory?' },
+      { id:'o10', type:'nonlinear', text:'Could a minor port delay create widespread product shortages?' },
+      { id:'o11', type:'nonlinear', text:'Could a small forecasting error become more problematic with longer lead times?' },
+      { id:'o12', type:'nonlinear', text:'Could one delayed shipment affect multiple customer orders simultaneously?' },
+      { id:'o13', type:'ambiguous', text:'Why might Sustainability support this change while Sales is concerned about service?' },
+      { id:'o14', type:'ambiguous', text:'Why might Finance focus on transportation savings while Operations worries about inventory?' },
+      { id:'o15', type:'ambiguous', text:'Why might different functions evaluate the success of this decision differently?' },
+      { id:'o16', type:'ambiguous', text:'What trade-offs between emissions, cost, inventory, and service need to be discussed openly?' },
+      { id:'o17', type:'none', text:'What color should the sustainability campaign use?' },
+      { id:'o18', type:'none', text:'Should the announcement be published on LinkedIn?' }
+    ]
+  }
+];
+
+let scenarioIdx = 0;
+let pool = [];
+let placements = {};
+let checked = false;
+let overallCorrect = 0;
+let overallTotal = 0;
+let drag = null;
+const gh = document.getElementById('luna-gh');
+const container = document.getElementById('luna');
+
+document.getElementById('luna-start').addEventListener('click', function(){
+  document.getElementById('luna-intro').classList.add('hidden');
+  scenarioIdx = 0;
+  overallCorrect = 0; overallTotal = 0;
+  loadScenario();
+});
+
+document.getElementById('luna-restart').addEventListener('click', function(){
+  document.getElementById('luna-done').classList.add('hidden');
+  document.getElementById('luna-intro').classList.remove('hidden');
+});
+
+document.getElementById('luna-restart-mid').addEventListener('click', function(){
+  document.getElementById('luna-board').classList.add('hidden');
+  document.getElementById('luna-recap').classList.add('hidden');
+  document.getElementById('luna-intro').classList.remove('hidden');
+});
+
+document.getElementById('luna-reset').addEventListener('click', function(){
+  loadScenario();
+});
+
+document.getElementById('luna-check').addEventListener('click', function(){
+  doCheck();
+});
+
+document.getElementById('luna-see-solution').addEventListener('click', function(){
+  showRecap();
+});
+
+function currentScenario(){ return SCENARIOS[scenarioIdx]; }
+
+function loadScenario(){
+  const sc = currentScenario();
+  pool = sc.questions.slice();
+  placements = {};
+  checked = false;
+  document.getElementById('luna-recap').classList.add('hidden');
+  document.getElementById('luna-done').classList.add('hidden');
+  document.getElementById('luna-board').classList.remove('hidden');
+  document.getElementById('luna-score').classList.add('hidden');
+  document.getElementById('luna-check').classList.remove('hidden');
+  document.getElementById('luna-check').disabled = false;
+  document.getElementById('luna-reset').classList.remove('hidden');
+  document.getElementById('luna-stag').innerHTML = '<i class="ti ti-progress"></i>' + sc.label;
+  renderStepTrack();
+  document.getElementById('luna-dicon').innerHTML = '<i class="ti ' + sc.deckIcon + '"></i>';
+  document.getElementById('luna-dtext').textContent = sc.decision;
+  renderZones();
+  renderBank();
+}
+
+function renderStepTrack(){
+  const track = document.getElementById('luna-step-track');
+  track.innerHTML = '';
+  SCENARIOS.forEach(function(sc, i){
+    const circle = document.createElement('div');
+    circle.className = 'step-circle' + (i < scenarioIdx ? ' done' : (i === scenarioIdx ? ' active' : ''));
+    circle.textContent = (i + 1);
+    track.appendChild(circle);
+    if (i < SCENARIOS.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'step-line' + (i < scenarioIdx ? ' done' : '');
+      track.appendChild(line);
+    }
+  });
+}
+
+function renderZones(){
+  const sc = currentScenario();
+  const board = document.getElementById('luna-board-zones');
+  board.innerHTML = '';
+  LENSES.forEach(function(l){
+    const z = document.createElement('div');
+    z.className = 'lens-zone ' + l.key;
+    z.dataset.type = l.key;
+    z.innerHTML =
+      '<div class="lens-head">' +
+        '<div class="lens-icon"><i class="ti ' + l.icon + '"></i></div>' +
+        '<div><div class="lens-name">' + l.name + '</div><div class="lens-sub">' + sc.lensSub[l.key] + '</div></div>' +
+      '</div>' +
+      '<div class="lens-drop" id="luna-drop-' + l.key + '"><div class="lens-placeholder"><i class="ti ti-arrow-down"></i>Drop questions here</div></div>';
+    board.appendChild(z);
+  });
+}
+
+function allZoneKeys(){ return LENSES.map(function(l){ return l.key; }); }
+function zoneEl(key){ return document.getElementById('luna-drop-' + key); }
+
+function renderBank(){
+  const wrap = document.getElementById('luna-bank');
+  wrap.innerHTML = '';
+  const visible = checked ? pool.slice() : pool.slice(0, 5);
+  visible.forEach(function(q){
+    const c = document.createElement('div');
+    c.className = 'sticky';
+    c.dataset.id = q.id;
+    c.textContent = q.text;
+    if (checked) {
+      const good = q.type === 'none';
+      c.classList.add('locked', good ? 'correct' : 'incorrect');
+    } else {
+      c.addEventListener('pointerdown', function(e){ onDown(e, q, c); });
+    }
+    wrap.appendChild(c);
+  });
+  document.getElementById('luna-bank-count').textContent = checked ? 'left unplaced' : pool.length + ' left';
+}
+
+function onDown(e, q, c){
+  if (checked) return;
+  e.preventDefault();
+  drag = { q: q, c: c };
+  gh.textContent = q.text;
+  const cr = container.getBoundingClientRect();
+  gh.style.left = (e.clientX - cr.left - 30) + 'px';
+  gh.style.top  = (e.clientY - cr.top - 20) + 'px';
+  gh.style.display = 'block';
+  c.classList.add('src');
+  c.setPointerCapture(e.pointerId);
+  c.addEventListener('pointermove', onMove);
+  c.addEventListener('pointerup', onUp);
+  c.addEventListener('pointercancel', onCancel);
+}
+
+function onMove(e){
+  if (!drag) return;
+  const cr = container.getBoundingClientRect();
+  gh.style.left = (e.clientX - cr.left - 30) + 'px';
+  gh.style.top  = (e.clientY - cr.top - 20) + 'px';
+  allZoneKeys().forEach(function(k){
+    const z = zoneEl(k);
+    const r = z.getBoundingClientRect();
+    z.classList.toggle('over', e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom);
+  });
+}
+
+function onUp(e){
+  if (!drag) return;
+  clearL(e.currentTarget);
+  gh.style.display = 'none';
+  const x = e.clientX, y = e.clientY;
+  const hitKey = allZoneKeys().find(function(k){
+    const r = zoneEl(k).getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+  });
+  allZoneKeys().forEach(function(k){ zoneEl(k).classList.remove('over'); });
+
+  const q = drag.q, c = drag.c;
+  drag = null;
+  c.classList.remove('src');
+  if (!hitKey) return;
+
+  placeCard(q, hitKey);
+}
+
+function onCancel(e){
+  if (!drag) return;
+  clearL(e.currentTarget);
+  drag.c.classList.remove('src');
+  gh.style.display = 'none';
+  allZoneKeys().forEach(function(k){ zoneEl(k).classList.remove('over'); });
+  drag = null;
+}
+
+function clearL(el){
+  el.removeEventListener('pointermove', onMove);
+  el.removeEventListener('pointerup', onUp);
+  el.removeEventListener('pointercancel', onCancel);
+}
+
+function placeCard(q, zoneKey){
+  placements[q.id] = zoneKey;
+  pool = pool.filter(function(item){ return item.id !== q.id; });
+  renderBank();
+  renderPlaced();
+}
+
+function unplaceCard(q){
+  if (checked) return;
+  delete placements[q.id];
+  pool.unshift(q);
+  renderBank();
+  renderPlaced();
+}
+
+function renderPlaced(){
+  allZoneKeys().forEach(function(k){
+    const drop = zoneEl(k);
+    const placeholder = drop.querySelector('.lens-placeholder');
+    Array.prototype.slice.call(drop.querySelectorAll('.placed-chip')).forEach(function(el){ el.remove(); });
+    const items = currentScenario().questions.filter(function(q){ return placements[q.id] === k; });
+    placeholder.classList.toggle('hidden', items.length > 0);
+    items.forEach(function(q){
+      const chip = document.createElement('div');
+      chip.className = 'placed-chip';
+      chip.innerHTML = '<span>' + q.text + '</span><i class="ti ti-x rm"></i>';
+      chip.addEventListener('click', function(){ unplaceCard(q); });
+      drop.appendChild(chip);
+    });
+  });
+}
+
+function doCheck(){
+  checked = true;
+  let correct = 0;
+  currentScenario().questions.forEach(function(q){
+    const placedIn = placements[q.id];
+    const isCorrect = q.type === 'none' ? !placedIn : placedIn === q.type;
+    if (isCorrect) correct++;
+  });
+  allZoneKeys().forEach(function(k){
+    const drop = zoneEl(k);
+    Array.prototype.slice.call(drop.querySelectorAll('.placed-chip')).forEach(function(chipEl, i){
+      const items = currentScenario().questions.filter(function(q){ return placements[q.id] === k; });
+      const q = items[i];
+      if (!q) return;
+      const good = q.type === k;
+      chipEl.classList.add('locked', good ? 'correct' : 'incorrect');
+      chipEl.innerHTML = '<i class="ti ' + (good ? 'ti-check' : 'ti-x') + ' gi"></i><span>' + q.text + '</span>';
+    });
+  });
+  renderBank();
+
+  overallCorrect += correct;
+  overallTotal += 18;
+
+  document.getElementById('luna-check').classList.add('hidden');
+  document.getElementById('luna-reset').classList.add('hidden');
+  document.getElementById('luna-score').classList.remove('hidden');
+  document.getElementById('luna-score-text').innerHTML = '<span>' + correct + ' / 18</span> answered correctly';
+}
+
+function showRecap(){
+  const sc = currentScenario();
+  document.getElementById('luna-board').classList.add('hidden');
+  document.getElementById('luna-recap').classList.remove('hidden');
+  document.getElementById('luna-recap-tag').innerHTML = '<i class="ti ti-progress"></i>' + sc.label;
+  const grid = document.getElementById('luna-recap-grid');
+  grid.innerHTML = '';
+  LENSES.forEach(function(l){
+    const col = document.createElement('div');
+    col.className = 'recap-col ' + l.key;
+    const items = sc.questions.filter(function(q){ return q.type === l.key; });
+    col.innerHTML = '<div class="recap-title">' + l.name + '</div>' +
+      items.map(function(q){ return '<div class="recap-item"><i class="ti ti-check"></i><span>' + q.text + '</span></div>'; }).join('');
+    grid.appendChild(col);
+  });
+  const noneCol = document.createElement('div');
+  noneCol.className = 'recap-col none';
+  const noneItems = sc.questions.filter(function(q){ return q.type === 'none'; });
+  noneCol.innerHTML = '<div class="recap-title">Doesn\u2019t fit any LUNA category</div>' +
+    noneItems.map(function(q){ return '<div class="recap-item"><i class="ti ti-minus"></i><span>' + q.text + '</span></div>'; }).join('');
+  grid.appendChild(noneCol);
+
+  const nextBtn = document.getElementById('luna-recap-next');
+  const isLast = scenarioIdx >= SCENARIOS.length - 1;
+  nextBtn.innerHTML = isLast
+    ? '<i class="ti ti-flag" aria-hidden="true"></i>Finish microtask'
+    : '<i class="ti ti-arrow-right" aria-hidden="true"></i>Next decision';
+  nextBtn.onclick = function(){
+    if (isLast) { finishAll(); } else { scenarioIdx++; document.getElementById('luna-recap').classList.add('hidden'); loadScenario(); }
+  };
+}
+
+function finishAll(){
+  document.getElementById('luna-recap').classList.add('hidden');
+  document.getElementById('luna-donepill').textContent = 'Total score: ' + overallCorrect + ' / ' + overallTotal;
+  document.getElementById('luna-done').classList.remove('hidden');
+}
+})();
+</script>
+</div></body></html>
